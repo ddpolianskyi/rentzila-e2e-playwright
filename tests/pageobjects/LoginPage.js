@@ -118,9 +118,21 @@ exports.LoginPage = class LoginPage {
             await this.checkLoginPopup();
             await expect(this.loginWrongEmailOrPasswordError).toBeVisible();
         }
+        for(let i = 0; i < fixtures.nonExistingEmails.length; i++){
+            await this.enterLoginEmail(fixtures.nonExistingEmails[i]);
+            await this.clickLoginSubmitButton();
+            await this.checkLoginPopup();
+            await expect(this.loginWrongEmailOrPasswordError).toBeVisible();
+        }
         await this.enterLoginEmail(fixtures.email);
         for(let i = 0; i < fixtures.invalidPasswords.length; i++){
             await this.enterLoginPassword(fixtures.invalidPasswords[i]);
+            await this.clickLoginSubmitButton();
+            await this.checkLoginPopup();
+            await expect(this.loginWrongEmailOrPasswordError).toBeVisible();
+        }
+        for(let i = 0; i < fixtures.nonExistingPasswords.length; i++){
+            await this.enterLoginPassword(fixtures.nonExistingPasswords[i]);
             await this.clickLoginSubmitButton();
             await this.checkLoginPopup();
             await expect(this.loginWrongEmailOrPasswordError).toBeVisible();

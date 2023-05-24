@@ -2,7 +2,7 @@
     "email": "testuserrentzila@gmail.com",
     "password": "Testuser10",
     "invalidEmails": [
-        "testuser rentzila@gmail.com",
+        "testuser  rentzila@gmail.com",
         "еуіегіуккутеяшдф",
         "testuserrentzilagmail.com",
         "testuserrentzila@gmailcom",
@@ -13,8 +13,7 @@
     ],
     "invalidPasswords": [
         "Testuser10  ",
-        "_Testuser10",
-        "Testuser13",
+        " Testuser10",
         "testuser10",
         "TESTUSER10",
         "Еуіегіук10"
@@ -29,6 +28,9 @@
     ],
     "nonExistingEmails": [
         "testuserrentzila99@gmail.com"
+    ],
+    "nonExistingPasswords": [
+        "Testuser13"
     ],
     "nonExistingPhoneNumbers": [
         "05067430600",
