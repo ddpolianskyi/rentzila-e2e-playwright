@@ -56,7 +56,3 @@ npm run test:safari
 // Run tests on Safari browser in headless mode.
 npm run test:safari:headless
 ```
-Generate and open an Allure HTML report:
-```
-npm run report
-```
