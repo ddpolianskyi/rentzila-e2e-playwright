@@ -1,0 +1,38 @@
+{
+    "email": "testuserrentzila@gmail.com",
+    "password": "Testuser10",
+    "invalidEmails": [
+        "testuser rentzila@gmail.com",
+        "еуіегіуккутеяшдф",
+        "testuserrentzilagmail.com",
+        "testuserrentzila@gmailcom",
+        "testuserrentzila@gmail",
+        "testuserrentzila@.com",
+        "testuserrentzila",
+        "testuserrentzila@@gmail.com"
+    ],
+    "invalidPasswords": [
+        "Testuser10  ",
+        "_Testuser10",
+        "Testuser13",
+        "testuser10",
+        "TESTUSER10",
+        "Еуіегіук10"
+    ],
+    "invalidPhoneNumbers": [
+        "506743060",
+        "050674306",
+        "+380-50-674-3060",
+        "+380 50 674 3060",
+        "+380(50)6743060",
+        "(50)6743060"
+    ],
+    "nonExistingEmails": [
+        "testuserrentzila99@gmail.com"
+    ],
+    "nonExistingPhoneNumbers": [
+        "05067430600",
+        "+10506743060",
+        "+0506743060"
+    ]
+}

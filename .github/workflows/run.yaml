@@ -1,0 +1,25 @@
+name: Run
+on:
+  push:
+    branches:
+      - 'master'
+
+jobs:
+  Run:
+    name: Run
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Dependencies install
+        run: npm install
+      
+      - name: Playwright browsers install
+        run: |
+          npx playwright install
+          npx playwright install-deps
+
+      - name: Tests run
+        run: npm run test:headless
+        continue-on-error: true
