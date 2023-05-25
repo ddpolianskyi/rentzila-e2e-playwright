@@ -94,6 +94,7 @@ exports.LoginPage = class LoginPage {
         await this.clickLoginSubmitButton();
         await this.checkLoginEmail();
         await this.checkLoginPassword();
+        await this.checkLoginPopup();
         await this.enterLoginEmail(fixtures.email);
         await this.clickLoginSubmitButton();
         await this.negativeCheckLoginEmail();
@@ -109,6 +110,8 @@ exports.LoginPage = class LoginPage {
      * @name loginWithInvalidCredentials
      * This function check authorization with invalid credentials.
      */
+
+    // Mistake in the C203 test case. "Невірний e-mail або пароль" should be displayed only when user fill the inputs with non-existent emails/passwords.
     async loginWithInvalidCredentials(){
         await this.openLoginPopup();
         await this.enterLoginPassword(fixtures.password)
@@ -164,7 +167,6 @@ exports.LoginPage = class LoginPage {
      */
     async passwordResetWithInvalidEmail(){
         await this.openLoginPopup();
-        await this.enterLoginEmail('');
         await this.openRestorePasswordPopup();
         await this.enterLoginEmail(fixtures.email);
         await this.clickRestorePasswordCloseButton();
