@@ -1,5 +1,6 @@
 const { test, expect } = require('@playwright/test');
 const fixtures = require('../../fixtures/fixtures.json');
+const { HomePage } = require('../../pageobjects/HomePage');
 const { LoginPage } = require('../../pageobjects/LoginPage');
 
 const invalidEmails = [
@@ -14,9 +15,9 @@ const invalidEmails = [
 ];
 
 test.beforeEach(async ({ page }) => {
-    const loginPage = new LoginPage(page);
-    await loginPage.open();
-    await loginPage.loginButton.click();
+    const homePage = new HomePage(page);
+    await homePage.open();
+    await homePage.loginButton.click();
 });
 test('C-199 Reset the password with invalid email', async ({ page }) => {
     const loginPage = new LoginPage(page);

@@ -4,7 +4,6 @@ exports.LoginPage = class LoginPage {
     constructor(page){
         this.page = page;
 
-        this.loginButton = this.page.locator('//*[text()="Вхід"]');
         this.loginPopup = this.page.locator('[data-testid="loginPopup"]');
         this.loginEmailInput = this.page.locator('[data-testid="loginPopup"] #email');
         this.loginPasswordInput = this.page.locator('[data-testid="loginPopup"] #password');
@@ -26,16 +25,8 @@ exports.LoginPage = class LoginPage {
         this.restorePasswordFieldCannotBeEmptyError = this.page.locator('//*[@data-testid="restorePasswordPopup"]//*[text()="Поле не може бути порожнім"]');
         this.restorePasswordWrongEmailOrPhoneNumberError = this.page.locator('//*[@data-testid="restorePasswordPopup"]//*[text()="Неправильний формат email або номера телефону"]');
         this.restorePasswordUserIsNotVerifiedError = this.page.locator('[data-testid="restorePasswordPopup"] [data-testid="restoreError"]');
+    }
 
-        this.avatarIcon = this.page.locator('[data-testid="avatarBlock"]');
-        this.profileDropdown = this.page.locator('//*[@data-testid="profileDropdown"]/div[2]');
-        this.profileDropdownEmail = this.page.locator('[data-testid="profileDropdown"] [data-testid="email"]');
-        this.profileDropdownLogoutButton = this.page.locator('[data-testid="profileDropdown"] [data-testid="logout"]');
-    }
-    
-    async open(){
-        await this.page.goto('/');
-    }
     async enterLoginEmail(value){
         await this.loginEmailInput.fill(value);
         await expect(this.loginEmailInput).toHaveValue(value);

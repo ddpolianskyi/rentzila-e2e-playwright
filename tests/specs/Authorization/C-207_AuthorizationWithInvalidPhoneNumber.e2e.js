@@ -1,5 +1,6 @@
 const { test, expect } = require('@playwright/test');
 const fixtures = require('../../fixtures/fixtures.json');
+const { HomePage } = require('../../pageobjects/HomePage');
 const { LoginPage } = require('../../pageobjects/LoginPage');
 
 const invalidPhoneNumbers = [
@@ -12,9 +13,9 @@ const invalidPhoneNumbers = [
 ];
 
 test.beforeEach(async ({ page }) => {
-    const loginPage = new LoginPage(page);
-    await loginPage.open();
-    await loginPage.loginButton.click();
+    const homePage = new HomePage(page);
+    await homePage.open();
+    await homePage.loginButton.click();
 });
 test('C-207 Authorization with invalid phone number', async ({ page }) => {
     const loginPage = new LoginPage(page);
@@ -25,7 +26,6 @@ test('C-207 Authorization with invalid phone number', async ({ page }) => {
         await expect(loginPage.loginPopup).toBeVisible();
         await expect(loginPage.loginWrongFormatOfEmailOrPhoneNumberError).toBeVisible();
     };
-    
     await loginPage.enterLoginEmail(fixtures.nonExistingPhoneNumber);
     await loginPage.loginSubmitButton.click();
     await expect(loginPage.loginPopup).toBeVisible();
