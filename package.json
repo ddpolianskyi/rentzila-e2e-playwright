@@ -6,14 +6,14 @@
 	"scripts": {
 		"test": "npx playwright test --headed",
 		"test:headless": "npx playwright test",
-		"test:chrome": "npx playwright test --headed --project=chromium",
-		"test:chrome:headless": "npx playwright test --project=chromium",
+		"test:chrome": "npx playwright test --headed --project=chrome",
+		"test:chrome:headless": "npx playwright test --project=chrome",
 		"test:firefox": "npx playwright test --headed --project=firefox",
 		"test:firefox:headless": "npx playwright test --project=firefox",
 		"test:edge": "npx playwright test --headed --project=msedge",
 		"test:edge:headless": "npx playwright test --project=msedge",
-		"test:safari": "npx playwright test --headed --project=webkit",
-		"test:safari:headless": "npx playwright test --project=webkit"
+		"test:safari": "npx playwright test --headed --project=safari",
+		"test:safari:headless": "npx playwright test --project=safari"
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.34.2"

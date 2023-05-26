@@ -1,40 +1,29 @@
 {
     "email": "testuserrentzila@gmail.com",
     "password": "Testuser10",
-    "invalidEmails": [
-        "testuser  rentzila@gmail.com",
-        "еуіегіуккутеяшдф",
-        "testuserrentzilagmail.com",
-        "testuserrentzila@gmailcom",
-        "testuserrentzila@gmail",
-        "testuserrentzila@.com",
-        "testuserrentzila",
-        "testuserrentzila@@gmail.com"
-    ],
-    "invalidPasswords": [
-        "Testuser10  ",
-        " Testuser10",
-        "testuser10",
-        "TESTUSER10",
-        "Еуіегіук10"
-    ],
-    "invalidPhoneNumbers": [
-        "506743060",
-        "050674306",
-        "+380-50-674-3060",
-        "+380 50 674 3060",
-        "+380(50)6743060",
-        "(50)6743060"
-    ],
-    "nonExistingEmails": [
-        "testuserrentzila99@gmail.com"
-    ],
-    "nonExistingPasswords": [
-        "Testuser13"
-    ],
-    "nonExistingPhoneNumbers": [
-        "05067430600",
-        "+10506743060",
-        "+0506743060"
-    ]
+
+    "emailWithSpace": "testuser rentzila@gmail.com",
+    "emailInCyrillic": "еуіегіуккутеяшдф",
+    "emailWithoutAtSign": "testuserrentzilagmail.com",
+    "emailWithoutDot": "testuserrentzila@gmailcom",
+    "emailWithoutDotCom": "testuserrentzila@gmail",
+    "emailWithoutGmail": "testuserrentzila@.com",
+    "emailWithoutAtSignGmailDotCom": "testuserrentzila",
+    "emailWithTwoAtSigns": "testuserrentzila@@gmail.com",
+    "nonExistingEmail": "testuserrentzila99@gmail.com",
+
+    "passwordWithSpaceAtTheEnd": "Testuser10 ",
+    "passwordWithSpaceAtTheBeginning": " Testuser10",
+    "passwordWithoutUppercaseLetter": "testuser10",
+    "passwordWithoutLowercaseLetter": "TESTUSER10",
+    "passwordInCyrillic": "Еуіегіук10",
+    "nonExistingPassword": "Testuser13",
+
+    "phoneNumberWithoutCountryCode": "506743060",
+    "phoneNumberWithoutLastNumber": "050674306",
+    "phoneNumberWithMinuses": "+380-50-674-3060",
+    "phoneNumberWithSpaces": "+380 50 674 3060",
+    "phoneNumberWithRoundBrackets": "+380(50)6743060",
+    "phoneNumberWithoutCountryCodeAndWithRoundBrackets": "(50)6743060",
+    "nonExistingPhoneNumber": "+380122333444"
 }

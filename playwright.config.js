@@ -3,14 +3,11 @@ const { defineConfig, devices } = require('@playwright/test');
 module.exports = defineConfig({
 	testDir: './tests/specs',
 	testMatch: '*.js',
-	fullyParallel: true,
+	fullyParallel: false,
 	forbidOnly: !!process.env.CI,
 	retries: process.env.CI ? 2 : 0,
-	workers: process.env.CI ? 1 : undefined,
+	workers: process.env.CI ? 5 : 5,
 	reporter: 'line',
-	expect: {
-		timeout: 15000
-	},
 	use: {
 		trace: 'on-first-retry',
 		headless: true,
@@ -18,7 +15,7 @@ module.exports = defineConfig({
 	},
 	projects: [
 		{
-			name: 'chromium',
+			name: 'chrome',
 			use: { ...devices['Desktop Chrome'] },
 		},
 		{
@@ -30,7 +27,7 @@ module.exports = defineConfig({
 			use: { ...devices['Desktop Edge'], channel: 'msedge' }
 		},
 		{
-			name: 'webkit',
+			name: 'safari',
 			use: { ...devices['Desktop Safari'] },
 		}
 	]
