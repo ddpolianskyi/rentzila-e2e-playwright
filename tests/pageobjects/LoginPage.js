@@ -27,7 +27,8 @@ exports.LoginPage = class LoginPage {
     
     async open(){
         this.page.goto('/');
-        await this.page.waitForTimeout(3000);
+        await expect(this.page.locator('[data-testid="preloader"]')).toBeVisible();
+        await expect(this.page.locator('[data-testid="preloader"]')).not.toBeVisible();
     }
 
     // Login
@@ -65,6 +66,15 @@ exports.LoginPage = class LoginPage {
         await expect(this.loginPasswordInput).not.toHaveCSS('border', '1px solid rgb(219, 49, 70)');
         await expect(this.loginPasswordError).not.toBeVisible();
     }
+    async checkLoginWrongEmailOrPasswordError(){
+        await expect(this.loginWrongEmailOrPasswordError).toBeVisible();
+    }
+    async checkLoginWrongPhoneNumberFormatError(){
+        await expect(this.loginWrongPhoneNumberFormatError).toBeVisible();
+    }
+    async checkLoginWrongPhoneNumberOrPasswordError(){
+        await expect(this.loginWrongPhoneNumberOrPasswordError).toBeVisible();
+    }
 
     // Restore password
     async openRestorePasswordPopup(){
@@ -83,6 +93,12 @@ exports.LoginPage = class LoginPage {
     }
     async clickRestorePasswordSubmitButton(){
         await this.restorePasswordSubmitButton.click();
+    }
+    async checkRestorePasswordWrongEmailOrPhoneNumberFormatError(){
+        await expect(this.restorePasswordWrongEmailOrPhoneNumberFormatError).toBeVisible();
+    }
+    async checkRestorePasswordEmailOrPhoneNumberAlreadyRegisteredError(){
+        await expect(this.restorePasswordEmailOrPhoneNumberAlreadyRegisteredError).toBeVisible();
     }
 
     /**
@@ -119,26 +135,26 @@ exports.LoginPage = class LoginPage {
             await this.enterLoginEmail(fixtures.invalidEmails[i]);
             await this.clickLoginSubmitButton();
             await this.checkLoginPopup();
-            await expect(this.loginWrongEmailOrPasswordError).toBeVisible();
+            await this.checkLoginWrongEmailOrPasswordError();
         }
         for(let i = 0; i < fixtures.nonExistingEmails.length; i++){
             await this.enterLoginEmail(fixtures.nonExistingEmails[i]);
             await this.clickLoginSubmitButton();
             await this.checkLoginPopup();
-            await expect(this.loginWrongEmailOrPasswordError).toBeVisible();
+            await this.checkLoginWrongEmailOrPasswordError();
         }
         await this.enterLoginEmail(fixtures.email);
         for(let i = 0; i < fixtures.invalidPasswords.length; i++){
             await this.enterLoginPassword(fixtures.invalidPasswords[i]);
             await this.clickLoginSubmitButton();
             await this.checkLoginPopup();
-            await expect(this.loginWrongEmailOrPasswordError).toBeVisible();
+            await this.checkLoginWrongEmailOrPasswordError();
         }
         for(let i = 0; i < fixtures.nonExistingPasswords.length; i++){
             await this.enterLoginPassword(fixtures.nonExistingPasswords[i]);
             await this.clickLoginSubmitButton();
             await this.checkLoginPopup();
-            await expect(this.loginWrongEmailOrPasswordError).toBeVisible();
+            await this.checkLoginWrongEmailOrPasswordError();
         }
     }
     /**
@@ -152,13 +168,13 @@ exports.LoginPage = class LoginPage {
             await this.enterLoginEmail(fixtures.invalidPhoneNumbers[i]);
             await this.clickLoginSubmitButton();
             await this.checkLoginPopup();
-            await expect(this.loginWrongPhoneNumberFormatError).toBeVisible();
+            await this.checkLoginWrongPhoneNumberFormatError();
         }
         for(let i = 0; i < fixtures.nonExistingPhoneNumbers.length; i++){
             await this.enterLoginEmail(fixtures.nonExistingPhoneNumbers[i]);
             await this.clickLoginSubmitButton();
             await this.checkLoginPopup();
-            await expect(this.loginWrongPhoneNumberOrPasswordError).toBeVisible();
+            await this.checkLoginWrongPhoneNumberOrPasswordError();
         }
     }
     /**
@@ -175,13 +191,13 @@ exports.LoginPage = class LoginPage {
             await this.enterRestorePasswordEmail(fixtures.invalidEmails[i]);
             await this.clickRestorePasswordSubmitButton();
             await this.checkRestorePasswordPopup();
-            await expect(this.restorePasswordWrongEmailOrPhoneNumberFormatError).toBeVisible();
+            await this.checkRestorePasswordWrongEmailOrPhoneNumberFormatError();
         }
         for(let i = 0; i < fixtures.nonExistingEmails.length; i++){
             await this.enterRestorePasswordEmail(fixtures.nonExistingEmails[i]);
             await this.clickRestorePasswordSubmitButton();
             await this.checkRestorePasswordPopup();
-            await expect(this.restorePasswordEmailOrPhoneNumberAlreadyRegisteredError).toBeVisible();
+            await this.checkRestorePasswordEmailOrPhoneNumberAlreadyRegisteredError();
         }
     }
 }

@@ -8,6 +8,9 @@ module.exports = defineConfig({
 	retries: process.env.CI ? 2 : 0,
 	workers: process.env.CI ? 1 : undefined,
 	reporter: 'line',
+	expect: {
+		timeout: 15000
+	},
 	use: {
 		trace: 'on-first-retry',
 		headless: true,
