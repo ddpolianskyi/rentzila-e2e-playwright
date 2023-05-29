@@ -3,6 +3,10 @@ const fixtures = require('../../fixtures/fixtures.json');
 const { HomePage } = require('../../pageobjects/HomePage');
 const { LoginPage } = require('../../pageobjects/LoginPage');
 
+const validEmails = [
+    fixtures.validEmail
+];
+
 test.beforeEach(async ({ page }) => {
     const homePage = new HomePage(page);
     await homePage.open();
@@ -24,4 +28,16 @@ test('C-201 Authorization with valid email and password', async ({ page }) => {
     await expect(homePage.profileDropdown).toBeVisible();
     await expect(homePage.profileDropdownEmail).toHaveText(fixtures.email);
     await homePage.profileDropdownLogoutButton.click();
+    for(let i = 0; i < validEmails.length; i++){
+        await homePage.loginButton.click();
+        await loginPage.enterLoginPassword(fixtures.password);
+        await loginPage.enterLoginEmail(validEmails[i]);
+        await loginPage.loginSubmitButton.click();
+        await expect(homePage.avatarIcon).toBeVisible();
+        await expect(loginPage.loginPopup).not.toBeVisible();
+        await homePage.avatarIcon.click();
+        await expect(homePage.profileDropdown).toBeVisible();
+        await expect(homePage.profileDropdownEmail).toHaveText(validEmails[i].toLowerCase());
+        await homePage.profileDropdownLogoutButton.click();
+    };
 });

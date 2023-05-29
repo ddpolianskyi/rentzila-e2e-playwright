@@ -2,6 +2,8 @@
     "email": "testuserrentzila@gmail.com",
     "password": "Testuser10",
 
+    "validEmail": "TESTUSERRENTZILA@GMAIL.COM",
+
     "emailWithSpace": "testuser rentzila@gmail.com",
     "emailInCyrillic": "еуіегіуккутеяшдф",
     "emailWithoutAtSign": "testuserrentzilagmail.com",
