@@ -1,5 +1,7 @@
 const { expect } = require('@playwright/test');
 
+const redColor = '1px solid rgb(219, 49, 70)';
+
 exports.LoginPage = class LoginPage {
     constructor(page){
         this.page = page;
@@ -11,6 +13,7 @@ exports.LoginPage = class LoginPage {
         this.loginHidePasswordIcon = this.page.locator('[data-testid="loginPopup"] [data-testid="okoIcon"]');
         this.loginSubmitButton = this.page.locator('//*[@data-testid="loginPopup"]//button[text()="Увійти"]');
         this.loginForgotPasswordButton = this.page.locator('//*[@data-testid="loginPopup"]//*[text()="Забули пароль?"]');
+        this.loginLoginWithGoogleButton = this.page.locator('//*[@data-testid="loginPopup"]//*[text()=" через Google"]');
         this.loginEmailFieldCannotBeEmptyError = this.page.locator('//*[@for="email"]/following-sibling::*[text()="Поле не може бути порожнім"]');
         this.loginPasswordFieldCannotBeEmptyError = this.page.locator('//*[@for="password"]/following-sibling::*[text()="Поле не може бути порожнім"]');
         this.loginWrongFormatOfEmailOrPhoneNumberError = this.page.locator('//*[@for="email"]/following-sibling::*[text()="Неправильний формат email або номера телефону"]');
@@ -25,6 +28,12 @@ exports.LoginPage = class LoginPage {
         this.restorePasswordFieldCannotBeEmptyError = this.page.locator('//*[@data-testid="restorePasswordPopup"]//*[text()="Поле не може бути порожнім"]');
         this.restorePasswordWrongEmailOrPhoneNumberError = this.page.locator('//*[@data-testid="restorePasswordPopup"]//*[text()="Неправильний формат email або номера телефону"]');
         this.restorePasswordUserIsNotVerifiedError = this.page.locator('[data-testid="restorePasswordPopup"] [data-testid="restoreError"]');
+
+        this.googleForm = this.page.locator('#initialView');
+        this.googleEmailInput = this.page.locator('input[type="email"]');
+        this.googlePasswordInput = this.page.locator('input[type="password"]');
+        this.googleEmailNextButton = this.page.locator('#identifierNext');
+        this.googlePasswordNextButton = this.page.locator('#passwordNext');
     }
 
     async enterLoginEmail(value){
@@ -38,5 +47,25 @@ exports.LoginPage = class LoginPage {
     async enterRestorePasswordEmail(value){
         await this.restorePasswordEmailInput.fill(value);
         await expect(this.restorePasswordEmailInput).toHaveValue(value);
+    }
+    async enterGoogleEmail(value){
+        await this.googleEmailInput.fill(value);
+        await expect(this.googleEmailInput).toHaveValue(value);
+    }
+    async enterGooglePassword(value){
+        await this.googlePasswordInput.fill(value);
+        await expect(this.googlePasswordInput).toHaveValue(value);
+    }
+    async checkLoginEmailToHaveErrorBorder(){
+        await expect(this.loginEmailInput).toHaveCSS('border', redColor);
+    }
+    async checkLoginEmailToNotHaveErrorBorder(){
+        await expect(this.loginEmailInput).not.toHaveCSS('border', redColor);
+    }
+    async checkLoginPasswordToHaveErrorBorder(){
+        await expect(this.loginPasswordInput).toHaveCSS('border', redColor);
+    }
+    async checkLoginPasswordToNotHaveErrorBorder(){
+        await expect(this.loginPasswordInput).not.toHaveCSS('border', redColor);
     }
 }
