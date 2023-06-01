@@ -1,8 +1,12 @@
 {
     "email": "testuserrentzila@gmail.com",
     "password": "Testuser10",
+    "phoneNumber": "+380506743060",
 
     "validEmail": "TESTUSERRENTZILA@GMAIL.COM",
+
+    "validPhoneNumberOne": "380506743060",
+    "validPhoneNumberTwo": "0506743060",
 
     "emailWithSpace": "testuser rentzila@gmail.com",
     "emailInCyrillic": "еуіегіуккутеяшдф",
