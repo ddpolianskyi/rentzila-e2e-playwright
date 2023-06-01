@@ -25,13 +25,14 @@ exports.LoginPage = class LoginPage {
         this.restorePasswordCloseButton = this.page.locator('[data-testid="restorePasswordCross"]');
         this.restorePasswordEmailInput = this.page.locator('[data-testid="restorePasswordPopup"] [name="login"]');
         this.restorePasswordSubmitButton = this.page.locator('[data-testid="restorePasswordPopup"] button');
+        this.restorePasswordSuccessMessage = this.page.locator('//*[text()="На Ваш е-mail надіслані подальші інструкції по відновленню пароля від акаунта"]');
         this.restorePasswordFieldCannotBeEmptyError = this.page.locator('//*[@data-testid="restorePasswordPopup"]//*[text()="Поле не може бути порожнім"]');
         this.restorePasswordWrongEmailOrPhoneNumberError = this.page.locator('//*[@data-testid="restorePasswordPopup"]//*[text()="Неправильний формат email або номера телефону"]');
         this.restorePasswordUserIsNotVerifiedError = this.page.locator('[data-testid="restorePasswordPopup"] [data-testid="restoreError"]');
 
         this.googleForm = this.page.locator('#initialView');
-        this.googleEmailInput = this.page.locator('input[type="email"]');
-        this.googlePasswordInput = this.page.locator('input[type="password"]');
+        this.googleEmailInput = this.page.locator('#identifierId');
+        this.googlePasswordInput = this.page.locator('[name="Passwd"]');
         this.googleEmailNextButton = this.page.locator('#identifierNext');
         this.googlePasswordNextButton = this.page.locator('#passwordNext');
     }
