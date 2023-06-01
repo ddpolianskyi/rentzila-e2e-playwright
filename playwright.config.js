@@ -18,6 +18,7 @@ module.exports = defineConfig({
 			name: 'chrome',
 			use: {
 				...devices['Desktop Chrome'],
+				ignoreHTTPSErrors: true,
 				launchOptions: {
 					args: [
 						'--disable-component-extensions-with-background-pages',
@@ -41,6 +42,7 @@ module.exports = defineConfig({
 			name: 'firefox',
 			use: {
 				...devices['Desktop Firefox'],
+				ignoreHTTPSErrors: true,
 				launchOptions: {
 					args: [
 						'--disable-component-extensions-with-background-pages',
@@ -64,6 +66,7 @@ module.exports = defineConfig({
 			name: 'msedge',
 			use: {
 				...devices['Desktop Edge'], channel: 'msedge',
+				ignoreHTTPSErrors: true,
 				launchOptions: {
 					args: [
 						'--disable-component-extensions-with-background-pages',
@@ -87,23 +90,7 @@ module.exports = defineConfig({
 			name: 'safari',
 			use: {
 				...devices['Desktop Safari'],
-				launchOptions: {
-					args: [
-						'--disable-gpu',
-						'--disable-dev-shm-usage',
-						'--disable-setuid-sandbox',
-						'--no-first-run',
-						'--no-sandbox',
-						'--no-zygote',
-						'--ignore-certificate-errors',
-						'--disable-extensions',
-						'--disable-infobars',
-						'--disable-blink-features=AutomationControlled',
-						'--disable-notifications',
-						'--disable-popup-blocking'
-					]
-				}
-			},
+			}
 		}
 	]
 });
