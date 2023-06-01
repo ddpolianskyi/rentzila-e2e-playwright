@@ -9,7 +9,7 @@ test.beforeEach(async ({ page }) => {
     await homePage.open();
     await homePage.loginButton.click();
 });
-test.only('С-209 Authorization with google', async ({ page, browserName }) => {
+test('С-209 Authorization with google', async ({ page, browserName }) => {
     if(browserName === 'webkit'){} else {
         const homePage = new HomePage(page);
         const loginPage = new LoginPage(page);
