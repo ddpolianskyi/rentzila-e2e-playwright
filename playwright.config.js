@@ -89,7 +89,6 @@ module.exports = defineConfig({
 				...devices['Desktop Safari'],
 				launchOptions: {
 					args: [
-						'--disable-component-extensions-with-background-pages',
 						'--disable-gpu',
 						'--disable-dev-shm-usage',
 						'--disable-setuid-sandbox',

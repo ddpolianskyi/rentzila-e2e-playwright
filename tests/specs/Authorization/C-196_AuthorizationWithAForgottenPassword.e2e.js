@@ -15,4 +15,5 @@ test('C-196 Authorization with a forgotten password', async ({ page }) => {
     await loginPage.enterRestorePasswordEmail(fixtures.email);
     await loginPage.restorePasswordSubmitButton.click();
     await expect(loginPage.restorePasswordSuccessMessage).toBeVisible();
+    // Implement redirecting to email and clicking the received restore password letter.
 });
