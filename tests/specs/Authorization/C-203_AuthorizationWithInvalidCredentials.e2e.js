@@ -28,7 +28,7 @@ test.beforeEach(async ({ page }) => {
 });
 test('C-203 Authorization with invalid credentials', async ({ page }) => {
     const loginPage = new LoginPage(page);
-    await loginPage.enterLoginPassword(fixtures.password);
+    await loginPage.enterLoginPassword(fixtures.entryPassword);
     for(let i = 0; i < invalidEmails.length; i++){
         await loginPage.enterLoginEmail(invalidEmails[i]);
         await loginPage.loginSubmitButton.click();
@@ -36,11 +36,11 @@ test('C-203 Authorization with invalid credentials', async ({ page }) => {
         await expect(loginPage.loginWrongFormatOfEmailOrPhoneNumberError).toBeVisible();
     };
     await loginPage.enterLoginEmail(fixtures.nonExistingEmail);
-    await loginPage.enterLoginPassword(fixtures.password);
+    await loginPage.enterLoginPassword(fixtures.entryPassword);
     await loginPage.loginSubmitButton.click();
     await expect(loginPage.loginPopup).toBeVisible();
     await expect(loginPage.loginWrongEmailOrPasswordError).toBeVisible();
-    await loginPage.enterLoginEmail(fixtures.email);
+    await loginPage.enterLoginEmail(fixtures.entryEmail);
     for(let i = 0; i < invalidPasswords.length; i++){
         await loginPage.enterLoginPassword(invalidPasswords[i]);
         await loginPage.loginSubmitButton.click();

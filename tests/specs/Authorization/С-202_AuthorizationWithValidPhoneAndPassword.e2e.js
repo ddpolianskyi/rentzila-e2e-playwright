@@ -7,7 +7,7 @@ const { MyProfilePage } = require('../../pageobjects/MyProfilePage');
 const validPhoneNumbers = [
     fixtures.validPhoneNumberOne,
     fixtures.validPhoneNumberTwo
-]
+];
 
 test.beforeEach(async ({ page }) => {
     const homePage = new HomePage(page);
@@ -18,9 +18,9 @@ test('С-202 Authorization with valid phone and password', async ({ page }) => {
     const homePage = new HomePage(page);
     const loginPage = new LoginPage(page);
     const myProfilePage = new MyProfilePage(page);
-    await loginPage.enterLoginEmail(fixtures.phoneNumber);
+    await loginPage.enterLoginEmail(fixtures.entryPhoneNumber);
     await loginPage.checkLoginEmailToNotHaveErrorBorder();
-    await loginPage.enterLoginPassword(fixtures.password);
+    await loginPage.enterLoginPassword(fixtures.entryPassword);
     await loginPage.checkLoginPasswordToNotHaveErrorBorder();
     await loginPage.loginSubmitButton.click();
     await expect(homePage.avatarIcon).toBeVisible();
@@ -29,14 +29,14 @@ test('С-202 Authorization with valid phone and password', async ({ page }) => {
     await homePage.profileDropdownMyProfileButton.click();
     await expect(page).toHaveURL(RegExp('/owner-cabinet/$'));
     const phoneNumberInputValue = await myProfilePage.phoneNumberInput.inputValue();
-    await expect(phoneNumberInputValue.replace(/\s/g, '')).toBe(fixtures.phoneNumber);
+    await expect(phoneNumberInputValue.replace(/\s/g, '')).toBe(fixtures.entryPhoneNumber);
     await expect(myProfilePage.phoneNumberVerificationIcon).toBeVisible();
     await homePage.avatarIcon.click();
     await homePage.profileDropdownLogoutButton.click();
     for(let i = 0; i < validPhoneNumbers.length; i++){
         await homePage.loginButton.click();
         await loginPage.enterLoginEmail(validPhoneNumbers[i]);
-        await loginPage.enterLoginPassword(fixtures.password);
+        await loginPage.enterLoginPassword(fixtures.entryPassword);
         await loginPage.loginSubmitButton.click();
         await expect(homePage.avatarIcon).toBeVisible();
         await homePage.avatarIcon.click();
@@ -44,7 +44,7 @@ test('С-202 Authorization with valid phone and password', async ({ page }) => {
         await homePage.profileDropdownMyProfileButton.click();
         await expect(page).toHaveURL(RegExp('/owner-cabinet/$'));
         const phoneNumberInputValue = await myProfilePage.phoneNumberInput.inputValue();
-        await expect(phoneNumberInputValue.replace(/\s/g, '')).toBe(fixtures.phoneNumber);
+        await expect(phoneNumberInputValue.replace(/\s/g, '')).toBe(fixtures.entryPhoneNumber);
         await expect(myProfilePage.phoneNumberVerificationIcon).toBeVisible();
         await homePage.avatarIcon.click();
         await homePage.profileDropdownLogoutButton.click();

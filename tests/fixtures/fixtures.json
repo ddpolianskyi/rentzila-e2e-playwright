@@ -1,9 +1,17 @@
 {
-    "email": "testuserrentzila@gmail.com",
-    "password": "Testuser10",
-    "phoneNumber": "+380506743060",
+    "entryEmail": "testuserrentzila@gmail.com",
+    "emailWithAccess": "testuserrentzila12@gmail.com",
+    "entryPassword": "Testuser10",
+    "passwordWithAccess": "Testuser12",
+    "entryPhoneNumber": "+380506743060",
+
+    "adminEmail": "dalaye5045@raotus.com",
+    "adminPassword": "Qwerty123",
 
     "validEmail": "TESTUSERRENTZILA@GMAIL.COM",
+    "registeredEmail": "registered@test.test",
+    "notRegisteredEmail": "notregistrationed@test.test",
+    "validPassword": "Testpass123",
 
     "validPhoneNumberOne": "380506743060",
     "validPhoneNumberTwo": "0506743060",

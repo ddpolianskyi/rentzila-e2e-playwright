@@ -15,8 +15,8 @@ test.beforeEach(async ({ page }) => {
 test('C-201 Authorization with valid email and password', async ({ page }) => {
     const homePage = new HomePage(page);
     const loginPage = new LoginPage(page);
-    await loginPage.enterLoginEmail(fixtures.email);
-    await loginPage.enterLoginPassword(fixtures.password);
+    await loginPage.enterLoginEmail(fixtures.entryEmail);
+    await loginPage.enterLoginPassword(fixtures.entryPassword);
     await loginPage.loginShowPasswordIcon.click();
     await expect(loginPage.loginPasswordInput).toHaveAttribute('type', 'text');
     await loginPage.loginHidePasswordIcon.click();
@@ -26,11 +26,11 @@ test('C-201 Authorization with valid email and password', async ({ page }) => {
     await expect(loginPage.loginPopup).not.toBeVisible();
     await homePage.avatarIcon.click();
     await expect(homePage.profileDropdown).toBeVisible();
-    await expect(homePage.profileDropdownEmail).toHaveText(fixtures.email);
+    await expect(homePage.profileDropdownEmail).toHaveText(fixtures.entryEmail);
     await homePage.profileDropdownLogoutButton.click();
     for(let i = 0; i < validEmails.length; i++){
         await homePage.loginButton.click();
-        await loginPage.enterLoginPassword(fixtures.password);
+        await loginPage.enterLoginPassword(fixtures.entryPassword);
         await loginPage.enterLoginEmail(validEmails[i]);
         await loginPage.loginSubmitButton.click();
         await expect(homePage.avatarIcon).toBeVisible();

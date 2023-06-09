@@ -19,7 +19,7 @@ test.beforeEach(async ({ page }) => {
 });
 test('C-207 Authorization with invalid phone number', async ({ page }) => {
     const loginPage = new LoginPage(page);
-    await loginPage.enterLoginPassword(fixtures.password);
+    await loginPage.enterLoginPassword(fixtures.entryPassword);
     for(let i = 0; i < invalidPhoneNumbers.length; i++){
         await loginPage.enterLoginEmail(invalidPhoneNumbers[i]);
         await loginPage.loginSubmitButton.click();

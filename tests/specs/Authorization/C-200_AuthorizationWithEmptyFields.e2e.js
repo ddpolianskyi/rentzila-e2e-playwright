@@ -16,7 +16,7 @@ test('C-200 Authorization with empty fields', async ({ page }) => {
     await loginPage.checkLoginPasswordToHaveErrorBorder();
     await expect(loginPage.loginEmailFieldCannotBeEmptyError).toBeVisible();
     await expect(loginPage.loginPasswordFieldCannotBeEmptyError).toBeVisible();
-    await loginPage.enterLoginEmail(fixtures.email);
+    await loginPage.enterLoginEmail(fixtures.entryEmail);
     await loginPage.checkLoginEmailToNotHaveErrorBorder();
     await loginPage.checkLoginPasswordToHaveErrorBorder();
     await expect(loginPage.loginEmailFieldCannotBeEmptyError).not.toBeVisible();
@@ -27,7 +27,7 @@ test('C-200 Authorization with empty fields', async ({ page }) => {
     await loginPage.checkLoginEmailToHaveErrorBorder();
     await expect(loginPage.loginEmailFieldCannotBeEmptyError).toBeVisible();
     await expect(loginPage.loginPasswordFieldCannotBeEmptyError).toBeVisible();
-    await loginPage.enterLoginPassword(fixtures.password);
+    await loginPage.enterLoginPassword(fixtures.entryPassword);
     await loginPage.checkLoginEmailToHaveErrorBorder();
     await loginPage.checkLoginPasswordToNotHaveErrorBorder();
     await expect(loginPage.loginEmailFieldCannotBeEmptyError).toBeVisible();

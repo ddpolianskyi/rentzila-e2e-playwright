@@ -16,18 +16,19 @@ const invalidEmails = [
 
 test.beforeEach(async ({ page }) => {
     const homePage = new HomePage(page);
+    const loginPage = new LoginPage(page);
     await homePage.open();
     await homePage.loginButton.click();
+    await expect(loginPage.loginPopup).toBeVisible();
 });
 test('C-199 Reset the password with invalid email', async ({ page }) => {
     const loginPage = new LoginPage(page);
-    await loginPage.loginForgotPasswordButton.click();
-    await expect(loginPage.restorePasswordPopup).toBeVisible();
+    await loginPage.clickForgotPasswordLink();
     await loginPage.restorePasswordSubmitButton.click();
     await expect(loginPage.restorePasswordFieldCannotBeEmptyError).toBeVisible();
-    await loginPage.enterRestorePasswordEmail(fixtures.email);
+    await loginPage.enterRestorePasswordEmail(fixtures.entryEmail);
     await loginPage.restorePasswordCloseButton.click();
-    await loginPage.loginForgotPasswordButton.click();
+    await loginPage.forgotPasswordLink.click();
     for(let i = 0; i < invalidEmails.length; i++){
         await loginPage.enterRestorePasswordEmail(invalidEmails[i]);
         await loginPage.restorePasswordSubmitButton.click();
