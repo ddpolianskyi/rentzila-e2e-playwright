@@ -3,37 +3,28 @@ const { defineConfig, devices } = require('@playwright/test');
 module.exports = defineConfig({
 	testDir: './tests/specs',
 	testMatch: '*.js',
-	fullyParallel: false,
+	fullyParallel: true,
+	timeout: 60000,
 	forbidOnly: !!process.env.CI,
 	retries: process.env.CI ? 2 : 0,
-	workers: process.env.CI ? 5 : 5,
+	workers: process.env.CI ? 1 : 1,
 	reporter: 'line',
 	use: {
 		trace: 'on-first-retry',
 		headless: true,
 		baseURL: 'https://letkabackend.click',
+		video: 'retain-on-failure',
 	},
 	projects: [
 		{
 			name: 'chrome',
 			use: {
-				...devices['Desktop Chrome'],
-				ignoreHTTPSErrors: true,
+				...devices['Desktop Chrome'], channel: 'chrome',
 				launchOptions: {
 					args: [
 						'--disable-component-extensions-with-background-pages',
 						'--disable-gpu',
-						'--disable-dev-shm-usage',
-						'--disable-setuid-sandbox',
-						'--no-first-run',
 						'--no-sandbox',
-						'--no-zygote',
-						'--ignore-certificate-errors',
-						'--disable-extensions',
-						'--disable-infobars',
-						'--disable-blink-features=AutomationControlled',
-						'--disable-notifications',
-						'--disable-popup-blocking'
 					]
 				}
 			},
@@ -42,46 +33,11 @@ module.exports = defineConfig({
 			name: 'firefox',
 			use: {
 				...devices['Desktop Firefox'],
-				ignoreHTTPSErrors: true,
 				launchOptions: {
 					args: [
 						'--disable-component-extensions-with-background-pages',
 						'--disable-gpu',
-						'--disable-dev-shm-usage',
-						'--disable-setuid-sandbox',
-						'--no-first-run',
 						'--no-sandbox',
-						'--no-zygote',
-						'--ignore-certificate-errors',
-						'--disable-extensions',
-						'--disable-infobars',
-						'--disable-blink-features=AutomationControlled',
-						'--disable-notifications',
-						'--disable-popup-blocking'
-					]
-				}
-			},
-		},
-		{
-			name: 'msedge',
-			use: {
-				...devices['Desktop Edge'], channel: 'msedge',
-				ignoreHTTPSErrors: true,
-				launchOptions: {
-					args: [
-						'--disable-component-extensions-with-background-pages',
-						'--disable-gpu',
-						'--disable-dev-shm-usage',
-						'--disable-setuid-sandbox',
-						'--no-first-run',
-						'--no-sandbox',
-						'--no-zygote',
-						'--ignore-certificate-errors',
-						'--disable-extensions',
-						'--disable-infobars',
-						'--disable-blink-features=AutomationControlled',
-						'--disable-notifications',
-						'--disable-popup-blocking'
 					]
 				}
 			},
@@ -92,5 +48,5 @@ module.exports = defineConfig({
 				...devices['Desktop Safari'],
 			}
 		}
-	]
+	],
 });

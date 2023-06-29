@@ -10,33 +10,46 @@ const invalidPasswords = [
     fixtures.passwordWithSpaceAtTheBeginning,
     fixtures.passwordWithoutUppercaseLetter,
     fixtures.passwordWithoutLowercaseLetter,
-    fixtures.passwordInCyrillic,
+    fixtures.passwordInCyrillic
 ];
 
-test.beforeEach(async ({ page }) => {
+const 
+    oldValidPassword = fixtures.passwordWithAccess,
+    newValidPassword = fixtures.validPassword
+
+test.skip('C-196 Reset the password with valid credentials', async ({ page }) => {
     const homePage = new HomePage(page);
     const loginPage = new LoginPage(page);
-    await homePage.open();
-    await homePage.loginButton.click();
-    await expect(loginPage.loginPopup).toBeVisible();
-});
-test('C-196 Reset the password with valid credentials', async ({ page, browserName }) => {
-    if(browserName === 'chromium'){
-        const loginPage = new LoginPage(page);
-        const gmailPage = new GmailPage(page);
-        const restorePasswordPage = new RestorePasswordPage(page);
-        await loginPage.clickForgotPasswordLink();
-        await loginPage.resetPassword(fixtures.emailWithAccess);
-        await expect(loginPage.restorePasswordSuccessMessage).toBeVisible();
-        await page.goto('https://mail.google.com');
-        await loginPage.loginGoogle(fixtures.emailWithAccess, fixtures.passwordWithAccess);
-        await gmailPage.restorePasswordLetter.click();
-        await gmailPage.expandLetterButton.click();
-        page.goto(await gmailPage.restorePasswordButton.getAttribute('href'));
-        for(let i = 0; i < invalidPasswords; i++){
-            await restorePasswordPage.enterPassword(invalidPasswords[i]);
-            await restorePasswordPage.submitButton.click();
-            await expect(loginPage.restorePasswordPopup).toBeVisible();
-        };
-    } else {};
+    const gmailPage = new GmailPage(page);
+    const restorePasswordPage = new RestorePasswordPage(page);
+
+    await homePage.goto('/');
+    await homePage.openLoginForm();
+    await loginPage.openForgotPasswordForm();
+    await loginPage.inputEmailAndClickRestoreButton(fixtures.emailWithGmail);
+    await expect(loginPage.restorePasswordSuccessMessage).toBeVisible();
+    await gmailPage.openGmailInboxWithLogin(fixtures.emailWithGmail, fixtures.passwordWithGmail);
+    await gmailPage.resetPasswordLetter.click();
+    await gmailPage.clickRestorePasswordLetterLink();
+    for(let i = 0; i < invalidPasswords.length; i++){
+        await restorePasswordPage.resetPassword(invalidPasswords[i]);
+        await expect(restorePasswordPage.errorMessage).toBeVisible();
+        await expect(restorePasswordPage.restorePasswordForm).toBeVisible();
+    };
+    await restorePasswordPage.inputPasswordAndClickRestoreButton(newValidPassword);
+    await loginPage.login(fixtures.emailWithGmail, oldValidPassword);
+    await expect(loginPage.loginWrongEmailOrPasswordError).toBeVisible();
+    await loginPage.login(fixtures.emailWithGmail, newValidPassword);
+    await homePage.checkProfileDropdownEmail(fixtures.emailWithGmail);
+    await homePage.logout();
+    await homePage.openLoginForm();
+    await loginPage.openForgotPasswordForm();
+    await loginPage.inputEmailAndClickRestoreButton(fixtures.emailWithGmail);
+    await expect(loginPage.restorePasswordSuccessMessage).toBeVisible();
+    await gmailPage.openGmailInbox();
+    await gmailPage.resetPasswordLetter.click();
+    await gmailPage.clickRestorePasswordLetterLink();
+    await restorePasswordPage.inputPasswordAndClickRestoreButton(fixtures.oldValidPassword);
+
+    // blocked because the testing gmail is blocked
 });

@@ -13,6 +13,7 @@ const invalidEmails = [
     fixtures.emailWithoutAtSignGmailDotCom,
     fixtures.emailWithTwoAtSigns
 ];
+
 const invalidPhoneNumbers = [
     fixtures.phoneNumberWithoutCountryCode,
     fixtures.phoneNumberWithoutLastNumber,
@@ -21,6 +22,7 @@ const invalidPhoneNumbers = [
     fixtures.phoneNumberWithRoundBrackets,
     fixtures.phoneNumberWithoutCountryCodeAndWithRoundBrackets,
 ];
+
 const invalidPasswords = [
     fixtures.passwordWithSpaceAtTheEnd,
     fixtures.passwordWithSpaceAtTheBeginning,
@@ -29,34 +31,31 @@ const invalidPasswords = [
     fixtures.passwordInCyrillic,
 ];
 
-test.beforeEach(async ({ page }) => {
+test('C-528 Registration with invalid credentials', async ({ page }) => {
     const homePage = new HomePage(page);
     const loginPage = new LoginPage(page);
-    await homePage.open();
-    await homePage.loginButton.click();
-    await expect(loginPage.loginPopup).toBeVisible();
+
+    await homePage.goto('/');
+    await homePage.openLoginForm();
     await loginPage.loginRegistrationButton.click();
-});
-test('C-528 Registration with invalid credentials', async ({ page }) => {
-    const loginPage = new LoginPage(page);
-    await loginPage.enterRegistrationPassword(fixtures.entryPassword);
+    await loginPage.inputRegistrationPassword(fixtures.entryPassword);
     for(let i = 0; i < invalidEmails.length; i++){
-        await loginPage.enterRegistrationEmail(invalidEmails[i]);
+        await loginPage.inputRegistrationEmail(invalidEmails[i]);
         await loginPage.registrationSubmitButton.click();
-        await expect(loginPage.loginPopup).toBeVisible();
+        await expect(loginPage.loginForm).toBeVisible();
         await expect(loginPage.registrationWrongFormatOfEmailOrPasswordError).toBeVisible();
     };
     for(let i = 0; i < invalidPhoneNumbers.length; i++){
-        await loginPage.enterRegistrationEmail(invalidPhoneNumbers[i]);
+        await loginPage.inputRegistrationEmail(invalidPhoneNumbers[i]);
         await loginPage.registrationSubmitButton.click();
-        await expect(loginPage.loginPopup).toBeVisible();
+        await expect(loginPage.loginForm).toBeVisible();
         await expect(loginPage.registrationWrongFormatOfEmailOrPasswordError).toBeVisible();
     };
-    await loginPage.enterRegistrationEmail(fixtures.entryEmail);
+    await loginPage.inputRegistrationEmail(fixtures.entryEmail);
     for(let i = 0; i < invalidPasswords.length; i++){
-        await loginPage.enterRegistrationPassword(invalidPasswords[i]);
+        await loginPage.inputRegistrationPassword(invalidPasswords[i]);
         await loginPage.registrationSubmitButton.click();
-        await expect(loginPage.loginPopup).toBeVisible();
+        await expect(loginPage.loginForm).toBeVisible();
         await expect(loginPage.registrationPasswordError).toBeVisible();
     };
 });

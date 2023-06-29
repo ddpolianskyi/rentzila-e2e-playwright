@@ -1,8 +1,8 @@
 {
     "entryEmail": "testuserrentzila@gmail.com",
-    "emailWithAccess": "testuserrentzila12@gmail.com",
     "entryPassword": "Testuser10",
-    "passwordWithAccess": "Testuser12",
+    "emailWithGmail": "testuserrentzila12@gmail.com",
+    "passwordWithGmail": "Testuser12",
     "entryPhoneNumber": "+380506743060",
 
     "adminEmail": "dalaye5045@raotus.com",

@@ -14,29 +14,24 @@ const invalidEmails = [
     fixtures.emailWithTwoAtSigns
 ];
 
-test.beforeEach(async ({ page }) => {
+test('C-199 Reset the password with invalid email', async ({ page }) => {
     const homePage = new HomePage(page);
     const loginPage = new LoginPage(page);
-    await homePage.open();
-    await homePage.loginButton.click();
-    await expect(loginPage.loginPopup).toBeVisible();
-});
-test('C-199 Reset the password with invalid email', async ({ page }) => {
-    const loginPage = new LoginPage(page);
-    await loginPage.clickForgotPasswordLink();
-    await loginPage.restorePasswordSubmitButton.click();
+
+    await homePage.goto('/');
+    await homePage.openLoginForm();
+    await loginPage.openForgotPasswordForm();
+    await loginPage.inputEmailAndClickRestoreButton('');
     await expect(loginPage.restorePasswordFieldCannotBeEmptyError).toBeVisible();
-    await loginPage.enterRestorePasswordEmail(fixtures.entryEmail);
+    await loginPage.inputRestorePasswordEmail(fixtures.emailWithGmail);
     await loginPage.restorePasswordCloseButton.click();
-    await loginPage.forgotPasswordLink.click();
+    await loginPage.openForgotPasswordForm();
     for(let i = 0; i < invalidEmails.length; i++){
-        await loginPage.enterRestorePasswordEmail(invalidEmails[i]);
-        await loginPage.restorePasswordSubmitButton.click();
-        await expect(loginPage.restorePasswordPopup).toBeVisible();
+        await loginPage.inputEmailAndClickRestoreButton(invalidEmails[i]);
         await expect(loginPage.restorePasswordWrongEmailOrPhoneNumberError).toBeVisible();
+        await expect(loginPage.restorePasswordPopup).toBeVisible();
     };
-    await loginPage.enterRestorePasswordEmail(fixtures.nonExistingEmail);
-    await loginPage.restorePasswordSubmitButton.click();
-    await expect(loginPage.restorePasswordPopup).toBeVisible();
+    await loginPage.inputEmailAndClickRestoreButton(fixtures.nonExistingEmail);
     await expect(loginPage.restorePasswordUserIsNotVerifiedError).toBeVisible();
+    await expect(loginPage.restorePasswordPopup).toBeVisible();
 });

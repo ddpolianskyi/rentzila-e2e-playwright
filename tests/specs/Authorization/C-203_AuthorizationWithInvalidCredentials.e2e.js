@@ -21,30 +21,23 @@ const invalidPasswords = [
     fixtures.passwordInCyrillic,
 ];
 
-test.beforeEach(async ({ page }) => {
-    const homePage = new HomePage(page);
-    await homePage.open();
-    await homePage.loginButton.click();
-});
 test('C-203 Authorization with invalid credentials', async ({ page }) => {
+    const homePage = new HomePage(page);
     const loginPage = new LoginPage(page);
-    await loginPage.enterLoginPassword(fixtures.entryPassword);
+
+    await homePage.goto('/');
+    await homePage.openLoginForm();
     for(let i = 0; i < invalidEmails.length; i++){
-        await loginPage.enterLoginEmail(invalidEmails[i]);
-        await loginPage.loginSubmitButton.click();
-        await expect(loginPage.loginPopup).toBeVisible();
+        await loginPage.login(invalidEmails[i], fixtures.entryPassword);
+        await expect(loginPage.loginForm).toBeVisible();
         await expect(loginPage.loginWrongFormatOfEmailOrPhoneNumberError).toBeVisible();
     };
-    await loginPage.enterLoginEmail(fixtures.nonExistingEmail);
-    await loginPage.enterLoginPassword(fixtures.entryPassword);
-    await loginPage.loginSubmitButton.click();
-    await expect(loginPage.loginPopup).toBeVisible();
+    await loginPage.login(fixtures.nonExistingEmail, fixtures.entryPassword);
+    await expect(loginPage.loginForm).toBeVisible();
     await expect(loginPage.loginWrongEmailOrPasswordError).toBeVisible();
-    await loginPage.enterLoginEmail(fixtures.entryEmail);
     for(let i = 0; i < invalidPasswords.length; i++){
-        await loginPage.enterLoginPassword(invalidPasswords[i]);
-        await loginPage.loginSubmitButton.click();
-        await expect(loginPage.loginPopup).toBeVisible();
-        await expect(loginPage.loginPasswordError).toBeVisible();
+        await loginPage.login(fixtures.entryEmail, invalidPasswords[i]);
+        await expect(loginPage.loginForm).toBeVisible();
+        await expect(loginPage.loginPasswordErrorMessage).toBeVisible();
     };
 });

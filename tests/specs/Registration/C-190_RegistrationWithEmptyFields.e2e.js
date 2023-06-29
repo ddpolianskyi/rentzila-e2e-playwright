@@ -3,29 +3,26 @@ const fixtures = require('../../fixtures/fixtures.json');
 const { HomePage } = require('../../pageobjects/HomePage');
 const { LoginPage } = require('../../pageobjects/LoginPage');
 
-test.beforeEach(async ({ page }) => {
-    const homePage = new HomePage(page);
-    const loginPage = new LoginPage(page);
-    await homePage.open();
-    await homePage.loginButton.click();
-    await expect(loginPage.loginPopup).toBeVisible();
-    await loginPage.loginRegistrationButton.click();
-});
 test('C-190 Registration with empty fields', async ({ page }) => {
     const homePage = new HomePage(page);
     const loginPage = new LoginPage(page);
+
+    await homePage.goto('/');
+    await homePage.openLoginForm();
+    await loginPage.loginRegistrationButton.click();
     await loginPage.registrationSubmitButton.click();
-    await expect(loginPage.registrationEmailFieldCannotBeEmptyError).toBeVisible();
-    await expect(loginPage.registrationPasswordFieldCannotBeEmptyError).toBeVisible();
-    await loginPage.enterRegistrationEmail(fixtures.notRegisteredEmail);
+    await loginPage.checkRegistrationEmailError('Поле не може бути порожнім');
+    await loginPage.checkRegistrationPasswordError('Поле не може бути порожнім');
+
+    await loginPage.inputRegistrationEmail(fixtures.notRegisteredEmail);
     await loginPage.registrationSubmitButton.click();
-    await expect(loginPage.registrationEmailFieldCannotBeEmptyError).not.toBeVisible();
-    await expect(loginPage.registrationPasswordFieldCannotBeEmptyError).toBeVisible();
-    await loginPage.enterRegistrationEmail('');
-    await loginPage.enterRegistrationPassword(fixtures.validPassword);
+    await loginPage.checkRegistrationPasswordError('Поле не може бути порожнім');
+
+    await loginPage.inputRegistrationEmail('');
+    await loginPage.inputRegistrationPassword(fixtures.validPassword);
     await loginPage.registrationSubmitButton.click();
-    await expect(loginPage.registrationEmailFieldCannotBeEmptyError).toBeVisible();
-    await expect(loginPage.registrationPasswordFieldCannotBeEmptyError).not.toBeVisible();
+    await loginPage.checkRegistrationEmailError('Поле не може бути порожнім');
+
     await loginPage.registrationLoginButton.click();
     await loginPage.login(fixtures.adminEmail, fixtures.adminPassword);
     await homePage.adminGearButton.click();

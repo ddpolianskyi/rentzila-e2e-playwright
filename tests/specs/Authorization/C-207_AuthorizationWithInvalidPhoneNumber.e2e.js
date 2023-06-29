@@ -12,22 +12,18 @@ const invalidPhoneNumbers = [
     fixtures.phoneNumberWithoutCountryCodeAndWithRoundBrackets,
 ];
 
-test.beforeEach(async ({ page }) => {
-    const homePage = new HomePage(page);
-    await homePage.open();
-    await homePage.loginButton.click();
-});
 test('C-207 Authorization with invalid phone number', async ({ page }) => {
+    const homePage = new HomePage(page);
     const loginPage = new LoginPage(page);
-    await loginPage.enterLoginPassword(fixtures.entryPassword);
+
+    await homePage.goto('/');
+    await homePage.openLoginForm();
     for(let i = 0; i < invalidPhoneNumbers.length; i++){
-        await loginPage.enterLoginEmail(invalidPhoneNumbers[i]);
-        await loginPage.loginSubmitButton.click();
-        await expect(loginPage.loginPopup).toBeVisible();
+        await loginPage.login(invalidPhoneNumbers[i], fixtures.entryPassword);
+        await expect(loginPage.loginForm).toBeVisible();
         await expect(loginPage.loginWrongFormatOfEmailOrPhoneNumberError).toBeVisible();
     };
-    await loginPage.enterLoginEmail(fixtures.nonExistingPhoneNumber);
-    await loginPage.loginSubmitButton.click();
-    await expect(loginPage.loginPopup).toBeVisible();
+    await loginPage.login(fixtures.nonExistingPhoneNumber, fixtures.entryPassword);
+    await expect(loginPage.loginForm).toBeVisible();
     await expect(loginPage.loginWrongPhoneNumberOrPasswordError).toBeVisible();
 });
